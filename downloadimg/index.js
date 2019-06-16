@@ -3,7 +3,9 @@ const path = require("path")
 const config = require("./config")
 const analyze = require("./analyze")
 const fs = require('fs')
-
+/**
+ * 请求网址，解析dom，下载img
+ */
 function start() {
   request(config.url, function (err, res, body) {
     if (!err && res) {
@@ -12,6 +14,11 @@ function start() {
     }
   })
 }
+/**
+ * 下载
+ * @param {*} imgUrl 
+ * @param {*} i 
+ */
 function download(imgUrl, i) {
   let ext = imgUrl.split(".").pop();
   let fileName = path.join(config.imgDir, i + "." + ext);
@@ -20,4 +27,7 @@ function download(imgUrl, i) {
   request('http:' + imgUrl)
     .pipe(fs.createWriteStream(fileName, { encoding: 'utf-8' }));
 }
+/**
+ * 运行
+ */
 start();
